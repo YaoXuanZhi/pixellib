@@ -299,7 +299,7 @@ IBITMAP *ibitmap_convfmt(int dfmt, const IBITMAP *src, const IRGB *spal,
 	if (ipixelfmt[dfmt].type != IPIX_FMT_TYPE_INDEX && dfmt == sfmt) {
 		ibitmap_blit(dst, 0, 0, src, 0, 0, w, h, 0);
 	}	else {
-		IUINT8 *buffer;
+		IUINT8 *buffer = NULL;
 		buffer = (IUINT8*)icmalloc(w * 4);
 		if (buffer) {
 			ipixel_blend(dfmt, dst->line[0], (long)dst->pitch, 0, sfmt,
@@ -324,7 +324,7 @@ void ibitmap_rectfill(IBITMAP *dst, int x, int y, int w, int h, IUINT32 c)
 {
 	int pixfmt = ibitmap_pixfmt_guess(dst);
 	iHLineDrawProc proc;
-	iColorIndex *index;
+	iColorIndex *index = NULL;
 	proc = ipixel_get_hline_proc(pixfmt, 0, 0);
 	index = (iColorIndex*)dst->extra;
 	if (x >= (int)dst->w || y >= (int)dst->h) return;

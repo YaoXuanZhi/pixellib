@@ -1519,26 +1519,29 @@ void ipic_write_pal(const void *_pal)
 
 struct IBITMAP *ipic_convert(struct IBITMAP *src, int dfmt, const IRGB *pal)
 {
-	struct IBITMAP *bmp;
-	int sfmt;
-	int w, h;
-	w = (int)src->w;
-	h = (int)src->h;
-	sfmt = _ibitmap_guess_pixfmt(src);
-	if (sfmt == dfmt) {
-		bmp = ibitmap_create(w, h, src->bpp);
-		if (bmp == NULL) return NULL;
-		ibitmap_blit(bmp, 0, 0, src, 0, 0, w, h, 0);
-		return bmp;
+	struct IBITMAP *bmp = NULL;
+	if (src != NULL)
+	{
+		int sfmt;
+		int w, h;
+		w = (int)src->w;
+		h = (int)src->h;
+		sfmt = _ibitmap_guess_pixfmt(src);
+		if (sfmt == dfmt) {
+			bmp = ibitmap_create(w, h, src->bpp);
+			if (bmp == NULL) return NULL;
+			ibitmap_blit(bmp, 0, 0, src, 0, 0, w, h, 0);
+			return bmp;
+		}
+		bmp = ibitmap_convfmt(dfmt, src, pal, pal);
 	}
-	bmp = ibitmap_convfmt(dfmt, src, pal, pal);
 	return bmp;
 }
 
 struct IBITMAP *ipic_load_file(const char *file, long pos, IRGB *pal)
 {
 	IMDIO stream;
-	struct IBITMAP *bmp;
+	struct IBITMAP *bmp = NULL;
 	IRGB *p = pal == NULL? _ipaletted : pal;
 
 	if (is_open_file(&stream, file, "rb")) {
@@ -1555,7 +1558,7 @@ struct IBITMAP *ipic_load_file(const char *file, long pos, IRGB *pal)
 struct IBITMAP *ipic_load_mem(const void *ptr, long size, IRGB *pal)
 {
 	IMDIO stream;
-	struct IBITMAP *bmp;
+	struct IBITMAP *bmp = NULL;
 	IRGB *p = pal == NULL ? _ipaletted : pal;
 	size = (size <= 0)? 0x7fffffffl : size;
 	is_init_mem(&stream, ptr, size);

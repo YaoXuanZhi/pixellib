@@ -2447,7 +2447,7 @@ static void ipixel_hline_draw_proc_##fmt##_0(void *bits, \
 	const iColorIndex *idx) \
 { \
 	unsigned char *dst = ((unsigned char*)bits) + offset * nbytes; \
-	IUINT32 r1, g1, b1, a1, r2, g2, b2, a2, cc, cx, cz; \
+	IUINT32 r1 = 0L, g1= 0L, b1= 0L, a1= 0L, r2= 0L, g2= 0L, b2= 0L, a2= 0L, cc= 0L, cx= 0L, cz= 0L; \
 	IRGBA_FROM_A8R8G8B8(color, r1, g1, b1, a1); \
 	if (a1 == 0) return; \
 	cz = IRGBA_TO_PIXEL(fmt, r1, g1, b1, a1); \

@@ -1680,7 +1680,7 @@ int ipixel_traps_from_polygon(ipixel_trapezoid_t *trap,
 	const ipixel_point_fixed_t *PTS, int n, int clockwise, void *workmem)
 {
 	ipixel_point_fixed_t *pts = (ipixel_point_fixed_t*)workmem;
-	const ipixel_point_fixed_t *a, *b, *c;
+	const ipixel_point_fixed_t *a = NULL, *b = NULL, *c = NULL;
 	int index = 0;
 	if (n < 3) return 0;
 	memcpy(pts, PTS, sizeof(ipixel_point_fixed_t) * n);
